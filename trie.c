@@ -101,18 +101,3 @@ void displayR(Node * root, char str[], int level)
     }
 }
 
-int main()
-{
-    Trie * trie = newTrie();
-    
-    insert(trie,"lee",3);
-    insert(trie,"abc",3);
-    insert(trie,"abcdd",5);
-    insert(trie,"abcc",4);
-
-
-    printTrie(trie);
-    printf("\n");
-    printTrieR(trie);
-
-}
