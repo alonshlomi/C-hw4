@@ -1,18 +1,19 @@
 #define NUM_LETTERS ((int)26)
 #define WORD_SIZE 30
+
 typedef enum {FALSE=0, TRUE=1} boolean;
 
 typedef struct Node
 {
-    char letter;
-    long unsigned int count;
-    struct Node * children[NUM_LETTERS];
-    boolean isLeaf;
+    char letter;                            //represents the letter
+    long unsigned int count;                //num word ended by this node
+    struct Node * children[NUM_LETTERS];    //Node array, represents the potential children of this node
+    boolean isLeaf;                         //indicate whether this node is a end of word
 } Node;
 
 typedef struct Trie
 {
-    Node * root;
+    Node * root;    //holds the trie root
 } Trie;
 
 Trie* newTrie();
