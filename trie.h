@@ -26,3 +26,6 @@ void display(Node * root, char str[], int level);
 
 void printTrieR(Trie * trie);
 void displayR(Node * root, char str[], int level);
+
+void freeTrie(Trie * trie);
+void freeNode(Node * node);
