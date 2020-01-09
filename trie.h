@@ -1,5 +1,6 @@
 #define NUM_LETTERS ((int)26)
 #define WORD_SIZE 10
+#define TO_LOWER 32
 
 typedef enum {FALSE=0, TRUE=1} boolean;
 

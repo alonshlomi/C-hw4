@@ -12,9 +12,9 @@ int getWord(char *w)
     {
         if (num_count == WORD_SIZE)
         {
-            w = (char *)realloc(w, WORD_SIZE*2);
+            w = (char *)realloc(w, WORD_SIZE * 2);
         }
-        
+
         if (ch >= 'A' && ch <= 'Z') //ToLowerCase
         {
             ch += 32;
@@ -50,26 +50,60 @@ int main(int argc, char *argv[])
     //
 
     Trie *trie = newTrie(); //Initialize new trie.
-    char *str = (char *)malloc(WORD_SIZE);
-    int max_size=0;
+    char *str = (char *)malloc(sizeof(char) * 2);
+    int max_size = 0;
     int size = 0;
-    while ((size = getWord(str)) > 0) //While the program recieve words
+    char ch;
+    int i = 0;
+    while (scanf("%c", &ch) == 1)
     {
-        if(size > max_size) {
-            max_size = size;
+        if ((ch == '\n' || ch == ' ' || ch == '\t'))
+        {
+            if (size != 0)
+            {
+                insert(trie, str, size);
+                if (size > max_size)
+                {
+                    max_size = size;
+                }
+                free(str);
+                str = (char *)malloc(sizeof(char) * 2);
+                size = 0;
+            }
+            continue;
         }
 
-        insert(trie, str, size); //Insert to trie
+        if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
+        {
+            if (ch >= 'A' && ch <= 'Z')
+            {
+                ch += TO_LOWER;
+            }
+            str[size++] = ch;
+            str = (char *)realloc(str, size + 2);
+        }
     }
- //   free(str);
+
+    if (size != 0)
+    {
+        insert(trie, str, size);
+        if (size > max_size)
+        {
+            max_size = size;
+        }
+        free(str);
+       str = (char *)malloc(sizeof(char) * 2);
+       size = 0;
+    }
+    free(str);
 
     if (argc == 2) //if there is 'r' parameter, print reverse.
     {
-        printTrieR(trie,max_size);
+        printTrieR(trie, max_size);
     }
     else //Otherwise
     {
-        printTrie(trie,max_size);
+        printTrie(trie, max_size);
     }
 
     freeTrie(trie); //free memory
