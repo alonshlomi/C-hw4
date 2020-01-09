@@ -54,7 +54,6 @@ int main(int argc, char *argv[])
     int max_size = 0;
     int size = 0;
     char ch;
-    int i = 0;
     while (scanf("%c", &ch) == 1)
     {
         if ((ch == '\n' || ch == ' ' || ch == '\t'))
@@ -91,9 +90,6 @@ int main(int argc, char *argv[])
         {
             max_size = size;
         }
-        free(str);
-       str = (char *)malloc(sizeof(char) * 2);
-       size = 0;
     }
     free(str);
 
