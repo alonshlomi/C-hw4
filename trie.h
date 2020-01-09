@@ -1,5 +1,5 @@
 #define NUM_LETTERS ((int)26)
-#define WORD_SIZE 30
+#define WORD_SIZE 10
 
 typedef enum {FALSE=0, TRUE=1} boolean;
 
@@ -22,10 +22,10 @@ Node* newNode(char letter);
 
 void insert(Trie* trie, char word[], int word_size);
 
-void printTrie(Trie * trie);
+void printTrie(Trie * trie,int size);
 void display(Node * root, char str[], int level);
 
-void printTrieR(Trie * trie);
+void printTrieR(Trie * trie,int size);
 void displayR(Node * root, char str[], int level);
 
 void freeTrie(Trie * trie);

@@ -4,15 +4,17 @@
 #include "trie.h"
 
 //Read word from standart input. (taken from hw3)
-int getWord(char w[])
+int getWord(char *w)
 {
     char ch;
     int num_count = 0;
-    while (scanf("%c", &ch) > 0)
+    while (scanf("%c", &ch) == 1)
     {
         if (num_count == WORD_SIZE)
-            break;
-
+        {
+            w = (char *)realloc(w, WORD_SIZE*2);
+        }
+        
         if (ch >= 'A' && ch <= 'Z') //ToLowerCase
         {
             ch += 32;
@@ -23,18 +25,18 @@ int getWord(char w[])
             w[num_count] = ch;
             break;
         }
-        else if (ch >= 'a' && ch <= 'z')    // Insert Low letter
+        else if (ch >= 'a' && ch <= 'z') // Insert Low letter
         {
             w[num_count] = ch;
         }
-        else     //Ignore otherwise
+        else //Ignore otherwise
         {
             continue;
         }
 
         num_count++; //count the letter added
     }
-    return num_count; 
+    return num_count;
 }
 
 int main(int argc, char *argv[])
@@ -48,20 +50,26 @@ int main(int argc, char *argv[])
     //
 
     Trie *trie = newTrie(); //Initialize new trie.
-    char str[WORD_SIZE]; 
-    int size;
+    char *str = (char *)malloc(WORD_SIZE);
+    int max_size=0;
+    int size = 0;
     while ((size = getWord(str)) > 0) //While the program recieve words
     {
-        insert(trie, str, size);    //Insert to trie
-    }
+        if(size > max_size) {
+            max_size = size;
+        }
 
-    if (argc == 2)  //if there is 'r' parameter, print reverse.
-    {
-        printTrieR(trie);
+        insert(trie, str, size); //Insert to trie
     }
-    else    //Otherwise
+ //   free(str);
+
+    if (argc == 2) //if there is 'r' parameter, print reverse.
     {
-        printTrie(trie);
+        printTrieR(trie,max_size);
+    }
+    else //Otherwise
+    {
+        printTrie(trie,max_size);
     }
 
     freeTrie(trie); //free memory

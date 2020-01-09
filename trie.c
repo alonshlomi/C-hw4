@@ -6,19 +6,19 @@
 //Constructors:
 Trie *newTrie()
 {
-    Trie *new_trie = (Trie *)malloc(sizeof(Trie));  //Memory allocate
-    new_trie->root = newNode(0);    //Build node with no data for the root
+    Trie *new_trie = (Trie *)malloc(sizeof(Trie)); //Memory allocate
+    new_trie->root = newNode(0);                   //Build node with no data for the root
 
     return new_trie;
 }
 
 Node *newNode(char l)
 {
-    Node *new_node = (Node *)malloc(sizeof(Node));  //Memory allocate
-    new_node->letter = l;   
+    Node *new_node = (Node *)malloc(sizeof(Node)); //Memory allocate
+    new_node->letter = l;
     new_node->count = 0;
     new_node->isLeaf = FALSE;
-    for (int i = 0; i < NUM_LETTERS; i++)   //Initialize the children array
+    for (int i = 0; i < NUM_LETTERS; i++) //Initialize the children array
     {
         new_node->children[i] = NULL;
     }
@@ -28,62 +28,65 @@ Node *newNode(char l)
 //
 
 //Insert new node to Trie
-void insert(Trie *trie, char word[], int word_size)
+void insert(Trie *trie, char *word, int word_size)
 {
     Node *curr = trie->root;
 
     for (int i = 0; i < word_size; i++)
     {
         char ch = word[i];
-        if (ch == 0)    //Word end
+        if (ch == 0) //Word end
             break;
         if (curr->children[ch - 'a'] == NULL) //Check if there is a child with this letter
         {
-            Node *new_node = newNode(ch);   //Build new Node
+            Node *new_node = newNode(ch); //Build new Node
             curr->children[ch - 'a'] = new_node;
         }
 
-        curr = curr->children[ch - 'a'];   
+        curr = curr->children[ch - 'a'];
     }
-    curr->isLeaf = TRUE;    
+    curr->isLeaf = TRUE;
     curr->count++;
 }
 
-void printTrie(Trie *trie)
+void printTrie(Trie *trie,int size)
 {
-    char s[WORD_SIZE];  //Init a String(char array)
+     char s[size];  //Init a String(char array)
+    //char *s = (char *)malloc(WORD_SIZE);
     display(trie->root, s, 0); //Recursive call
 }
 
 //helper function for printing the trie in alphabetic order
-void display(Node *root, char str[], int level)
-{   
+void display(Node *root, char *str, int level)
+{
     //Stop condition:
     if (root == NULL)
         return;
     //
 
-    if (root->isLeaf == TRUE)   //Check whether this node is a leaf
-    {
+    if (root->isLeaf == TRUE) //Check whether this node is a leaf
+    {   
         str[level] = '\0';
         printf("%s\t%ld\n", str, root->count); //Print the String contains the word until this node
     }
 
     int i;
-    for (i = 0; i < NUM_LETTERS; i++)   //Running from the lower to upper
+    for (i = 0; i < NUM_LETTERS; i++) //Running from the lower to upper
     {
+        
         if (root->children[i] != NULL)
         {
-            str[level] = i + 'a';   //Add the letter to the String
+
+            str[level] = i + 'a';                       //Add the letter to the String
             display(root->children[i], str, level + 1); //Recursive call
         }
     }
 }
 
-void printTrieR(Trie *trie)
+void printTrieR(Trie *trie,int size)
 {
-    char s[WORD_SIZE];  //Init a String(char array)
-    displayR(trie->root, s, 0);     //Recursive call
+    char s[size];          //Init a String(char array)
+    displayR(trie->root, s, 0); //Recursive call
 }
 
 //Backwords display() function
@@ -113,8 +116,8 @@ void displayR(Node *root, char str[], int level)
 
 //free trie and nodes:
 void freeTrie(Trie *trie)
-{   
-    freeNode(trie->root);   
+{
+    freeNode(trie->root);
     free(trie);
 }
 
@@ -127,7 +130,7 @@ void freeNode(Node *node)
         {
             freeNode(node->children[i]);
         }
-    }  
-    free(node);    
+    }
+    free(node);
 }
 //
